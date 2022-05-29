@@ -4,6 +4,7 @@ import morgan from 'morgan'
 import cors from 'cors'
 
 export const app = express()
+const router = express.Router()
 
 app.disable('x-powered-by')
 
@@ -12,27 +13,36 @@ app.use(json())
 app.use(urlencoded({ extended: true }))
 app.use(morgan('dev'))
 
-const log = (req, res, next) => {
-  console.log('logging')
-  next()
-}
+router.get('/me', (req, res) => {
+  res.send({ me: 'hello' })
+})
+
+app.use('/api', router)
+
+/**
+ * Custom middleware
+ */
+// const log = (req, res, next) => {
+//   console.log('logging')
+//   next()
+// }
 
 /**
  * Get started
  */
-app.get('/', (req, res) => {
-  res.send({ message: 'hello' })
-})
+// app.get('/', (req, res) => {
+//   res.send({ message: 'hello' })
+// })
 
-app.post('/', (req, res) => {
-  console.log(req.body)
-  res.send({ message: 'ok' })
-})
+// app.post('/', (req, res) => {
+//   console.log(req.body)
+//   res.send({ message: 'ok' })
+// })
 
 /**
  * Setup routes
  */
-app.get('/data', log, (req, res) => {
+app.get('/data', (req, res) => {
   res.send({ message: 'hello' })
 })
 
