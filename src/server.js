@@ -12,6 +12,11 @@ app.use(json())
 app.use(urlencoded({ extended: true }))
 app.use(morgan('dev'))
 
+const log = (req, res, next) => {
+  console.log('logging')
+  next()
+}
+
 /**
  * Get started
  */
@@ -27,7 +32,7 @@ app.post('/', (req, res) => {
 /**
  * Setup routes
  */
-app.get('/data', (req, res) => {
+app.get('/data', log, (req, res) => {
   res.send({ message: 'hello' })
 })
 
